@@ -19,6 +19,16 @@ public class Book {
     private String authorName;
     private int numberOfPages;
     private String descriptions;
+
+
     private double price;
     private LocalDate dateOfAppearance;
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                '}';
+    }
+
 }

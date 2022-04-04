@@ -1,5 +1,7 @@
 package book;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,17 +12,27 @@ import java.util.List;
 public record BookController(BookServices bookServices) {
 
     @PostMapping
-    public void registerBook(@RequestBody BookRegistrationRequest book) {
-        bookServices.registerBook(book);
+    public ResponseEntity<Book> addBook(@RequestBody BookRegistrationRequest book) {
+        Book newBook = bookServices.addBook(book);
+        return new ResponseEntity<>(newBook, HttpStatus.CREATED);
+
     }
 
     @GetMapping("/all")
-    public List<Book> getAllBooks(){
-       return bookServices.getAllBooks();
+    public ResponseEntity<List<Book>> getAllBooks(){
+       List<Book> bookList = bookServices.getAllBooks();
+       return new ResponseEntity<>(bookList,HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}")
-    public Book getBookById(@PathVariable int id){
-        return bookServices.getBookById(id);
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") int id){
+        Book book = bookServices.findBookById(id);
+        return new ResponseEntity<>(book,HttpStatus.FOUND);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Book> updateBook(@RequestBody Book book){
+        Book updateBook = bookServices.updateBook(book);
+        return new ResponseEntity<>(updateBook,HttpStatus.OK);
     }
 }
