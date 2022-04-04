@@ -2,6 +2,8 @@ package book;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -9,7 +11,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
+@Entity
 public class Book {
+    @Id
+    private int id;
     private String name;
     private String authorName;
     private int numberOfPages;
